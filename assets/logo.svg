@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 100" fill="none" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cubeGradientFull" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9333EA" />
+      <stop offset="35%" stop-color="#6366F1" />
+      <stop offset="70%" stop-color="#06B6D4" />
+      <stop offset="100%" stop-color="#10B981" />
+    </linearGradient>
+
+    <radialGradient id="coreGlowFull" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#34D399" />
+      <stop offset="60%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#059669" />
+    </radialGradient>
+
+    <linearGradient id="textGradFull" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+
+    <filter id="cubeShadowFull" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#6366F1" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- ÍCONE DO CUBO ISOMÉTRICO -->
+  <g transform="translate(10, 5)" filter="url(#cubeShadowFull)">
+    <polygon points="45,10 80,30 80,70 45,90 10,70 10,30" 
+             fill="none" 
+             stroke="url(#cubeGradientFull)" 
+             stroke-width="6" 
+             stroke-linecap="round" 
+             stroke-linejoin="round"/>
+
+    <line x1="45" y1="50" x2="45" y2="10" stroke="url(#cubeGradientFull)" stroke-width="5" stroke-linecap="round"/>
+    <line x1="45" y1="50" x2="80" y2="70" stroke="url(#cubeGradientFull)" stroke-width="5" stroke-linecap="round"/>
+    <line x1="45" y1="50" x2="10" y2="70" stroke="url(#cubeGradientFull)" stroke-width="5" stroke-linecap="round"/>
+
+    <circle cx="45" cy="50" r="11" fill="url(#coreGlowFull)" />
+    <circle cx="42" cy="47" r="3.5" fill="#A7F3D0" opacity="0.8"/>
+  </g>
+
+  <!-- TIPOGRAFIA OFICIAL OMNIEVO -->
+  <text x="110" y="62" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-weight="900" font-size="42" letter-spacing="-1" fill="url(#textGradFull)">OMNIEVO</text>
+</svg>
