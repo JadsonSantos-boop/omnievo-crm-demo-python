@@ -2769,6 +2769,63 @@ div[data-testid="stHorizontalBlock"] > div:nth-child(2) > div[data-testid="stVer
 .login-hud-footer {
     max-width: 520px;
     width: 100%;
+    position: relative;
+    z-index: 6;
+}
+
+/* 🌟 ANIMAÇÃO 3D DA PLATAFORMA CRM & KANBAN (FLUTUAÇÃO E PERSPECTIVA) */
+@keyframes float3D {
+    0%, 100% {
+        transform: perspective(1000px) rotateX(15deg) rotateY(-8deg) rotateZ(3deg) translateY(0px) scale(0.96);
+    }
+    50% {
+        transform: perspective(1000px) rotateX(19deg) rotateY(-4deg) rotateZ(1deg) translateY(-22px) scale(1.0);
+    }
+}
+@keyframes pulseHolo {
+    0%, 100% {
+        opacity: 0.40;
+        filter: drop-shadow(0 20px 40px rgba(99, 102, 241, 0.45)) brightness(0.95);
+    }
+    50% {
+        opacity: 0.65;
+        filter: drop-shadow(0 30px 60px rgba(6, 182, 212, 0.7)) brightness(1.15);
+    }
+}
+.bg-3d-dashboard-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 2;
+}
+.bg-3d-dashboard-img {
+    animation: float3D 7s ease-in-out infinite, pulseHolo 5s ease-in-out infinite;
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+    width: 520px;
+    height: 520px;
+    max-width: 90vw;
+    object-fit: cover;
+    border-radius: 28px;
+    opacity: 0.48;
+    mix-blend-mode: screen;
+    box-shadow: 0 0 90px rgba(99, 102, 241, 0.55);
+    border: 1px solid rgba(6, 182, 212, 0.4);
+}
+.bg-3d-dashboard-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 25%, rgba(7, 11, 20, 0.65) 65%, rgba(4, 6, 14, 0.92) 100%);
+    pointer-events: none;
+    z-index: 3;
 }
 
 /* Responsividade Mobile / Tablets */
@@ -3429,7 +3486,22 @@ div[data-testid="stHorizontalBlock"] > div:nth-child(2) > div[data-testid="stVer
 ''', unsafe_allow_html=True)
 
     with col_dir:
-        # ➡️ LADO DIREITO: SHOWCASE VISUAL DARK COSMIC COM HEADLINE DE ALTO CONTRASTE E 2 CARDS
+        # ➡️ LADO DIREITO: SHOWCASE VISUAL DARK COSMIC COM INTERFACE 3D FLUTUANTE ATRÁS DOS DADOS
+        dash_3d_b64 = ""
+        p_dash = os.path.join("assets", "omnievo_profile_crm_dashboard.jpg")
+        if os.path.exists(p_dash):
+            try:
+                with open(p_dash, "rb") as _fdash:
+                    dash_3d_b64 = f"data:image/jpeg;base64,{base64.b64encode(_fdash.read()).decode('utf-8')}"
+            except Exception:
+                pass
+        dash_3d_html = f'''
+<div class="bg-3d-dashboard-container">
+    <img src="{dash_3d_b64}" class="bg-3d-dashboard-img" alt="Interface 3D CRM Omnievo" />
+    <div class="bg-3d-dashboard-overlay"></div>
+</div>
+''' if dash_3d_b64 else ''
+
         logo_dir_light = ""
         for fn, mime in [("logo_custom.png", "image/png"), ("logo_custom.svg", "image/svg+xml"), ("logo_white.png", "image/png")]:
             p_lg = os.path.join("assets", fn)
@@ -3445,6 +3517,7 @@ div[data-testid="stHorizontalBlock"] > div:nth-child(2) > div[data-testid="stVer
         right_panel_html = f'''
 <div class="login-right-animated-panel">
 <div class="central-cosmic-glow"></div>
+{dash_3d_html}
 {logo_dir_html}
 <div class="orbit-ring orbit-ring-1"><div class="orbit-satellite sat-cyan"></div></div>
 <div class="orbit-ring orbit-ring-2"><div class="orbit-satellite sat-purple"></div><div class="orbit-satellite sat-amber"></div></div>
