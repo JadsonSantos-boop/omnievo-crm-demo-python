@@ -2792,6 +2792,15 @@ div[data-testid="stHorizontalBlock"] > div:nth-child(2) > div[data-testid="stVer
         filter: drop-shadow(0 30px 60px rgba(6, 182, 212, 0.7)) brightness(1.15);
     }
 }
+@keyframes progressAnim {
+    0% { width: 25%; }
+    50% { width: 85%; }
+    100% { width: 100%; }
+}
+@keyframes pingDot {
+    0% { transform: scale(1); opacity: 0.9; }
+    75%, 100% { transform: scale(2.4); opacity: 0; }
+}
 .bg-3d-dashboard-container {
     position: absolute;
     top: 50%;
@@ -3486,7 +3495,7 @@ div[data-testid="stHorizontalBlock"] > div:nth-child(2) > div[data-testid="stVer
 ''', unsafe_allow_html=True)
 
     with col_dir:
-        # ➡️ LADO DIREITO: SHOWCASE VISUAL DARK COSMIC COM INTERFACE 3D FLUTUANTE ATRÁS DOS DADOS
+        # ➡️ LADO DIREITO: INTERFACE 3D E CARDS EXATOS DA PREVIEW APROVADA
         dash_3d_b64 = ""
         p_dash = os.path.join("assets", "omnievo_profile_crm_dashboard.jpg")
         if os.path.exists(p_dash):
@@ -3495,113 +3504,133 @@ div[data-testid="stHorizontalBlock"] > div:nth-child(2) > div[data-testid="stVer
                     dash_3d_b64 = f"data:image/jpeg;base64,{base64.b64encode(_fdash.read()).decode('utf-8')}"
             except Exception:
                 pass
-        dash_3d_html = f'''
-<div class="bg-3d-dashboard-container">
-    <img src="{dash_3d_b64}" class="bg-3d-dashboard-img" alt="Interface 3D CRM Omnievo" />
-    <div class="bg-3d-dashboard-overlay"></div>
-</div>
-''' if dash_3d_b64 else ''
 
-        logo_dir_light = ""
-        for fn, mime in [("logo_custom.png", "image/png"), ("logo_custom.svg", "image/svg+xml"), ("logo_white.png", "image/png")]:
-            p_lg = os.path.join("assets", fn)
-            if os.path.exists(p_lg):
-                try:
-                    with open(p_lg, "rb") as _flg:
-                        logo_dir_light = f"data:{mime};base64,{base64.b64encode(_flg.read()).decode('utf-8')}"
-                    break
-                except Exception:
-                    pass
-        logo_dir_html = f'<div style="margin-bottom:16px;position:relative;z-index:6;display:flex;align-items:center;gap:12px;"><img src="{logo_dir_light}" style="height:56px;width:56px;object-fit:cover;border-radius:50%;box-shadow:0 6px 20px rgba(99,102,241,0.5);border:2px solid rgba(255,255,255,0.3);" alt="Omnievo" /><span style="font-size:24px;font-weight:900;color:#FFFFFF;letter-spacing:0.04em;text-shadow:0 2px 10px rgba(0,0,0,0.5);">OMNIEVO</span></div>' if logo_dir_light else ''
+        badge_b64 = ""
+        p_badge = os.path.join("assets", "omnievo_profile_badge.jpg")
+        if os.path.exists(p_badge):
+            try:
+                with open(p_badge, "rb") as _fbadge:
+                    badge_b64 = f"data:image/jpeg;base64,{base64.b64encode(_fbadge.read()).decode('utf-8')}"
+            except Exception:
+                pass
 
         right_panel_html = f'''
-<div class="login-right-animated-panel">
-<div class="central-cosmic-glow"></div>
-{dash_3d_html}
-{logo_dir_html}
-<div class="orbit-ring orbit-ring-1"><div class="orbit-satellite sat-cyan"></div></div>
-<div class="orbit-ring orbit-ring-2"><div class="orbit-satellite sat-purple"></div><div class="orbit-satellite sat-amber"></div></div>
-<div class="orbit-ring orbit-ring-3"><div class="orbit-satellite sat-emerald"></div></div>
+<div class="login-right-animated-panel" style="display: flex; align-items: center; justify-content: center; padding: 24px;">
+  <!-- CONTAINER DO PAINEL DIREITO COM A INTERFACE 3D FLUTUANTE EM MOVIMENTO ATRÁS DOS DADOS -->
+  <div style="position: relative; width: 100%; max-width: 620px; border-radius: 20px; overflow: hidden; border: 1px solid rgba(99, 102, 241, 0.45); background: linear-gradient(180deg, #0B0F1F 0%, #070B18 50%, #04060E 100%); padding: 26px 28px; box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.85); margin: auto;">
+    
+    <!-- 🌟 CAMADA 1 (FUNDO): A INTERFACE 3D DO CRM FLUTUANDO E SE MOVIMENTANDO -->
+    <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; overflow: hidden; z-index: 0;">
+      <!-- Glow Cósmico Central -->
+      <div style="position: absolute; width: 480px; height: 480px; border-radius: 50%; background: radial-gradient(circle, rgba(99, 102, 241, 0.38) 0%, rgba(6, 182, 212, 0.28) 40%, rgba(147, 51, 234, 0.35) 70%, transparent 100%); filter: blur(95px);"></div>
+      
+      <!-- A Interface 3D do CRM com Levitação Contínua & Rotação Tridimensional -->
+      <img src="{dash_3d_b64}" 
+           alt="Interface 3D CRM Omnievo" 
+           style="width: 520px; height: 520px; object-fit: cover; border-radius: 28px; opacity: 0.52; mix-blend-mode: screen; box-shadow: 0 0 90px rgba(99, 102, 241, 0.55); border: 1px solid rgba(6, 182, 212, 0.45); animation: float3D 7s ease-in-out infinite, pulseHolo 5s ease-in-out infinite; transform-style: preserve-3d; will-change: transform, opacity;" />
+      
+      <!-- Degradê Suave de Sobreposição para Alto Contraste -->
+      <div style="position: absolute; inset: 0; background: linear-gradient(0deg, rgba(4, 6, 14, 0.94) 0%, rgba(7, 11, 24, 0.62) 50%, rgba(11, 15, 31, 0.72) 100%); pointer-events: none;"></div>
+    </div>
 
-<!-- 1. Top HUD Bar -->
-<div class="login-hud-header">
-<div class="hud-engine-title">
-<span class="hud-dot-beacon"></span>
-<span>OMNIEVO_ENGINE // ACTIVE_NODE</span>
-</div>
-<div class="hud-right-actions">
-<span class="hud-latency">LATENCY: 0ms (ERP_DIRECT)</span>
-</div>
-</div>
+    <!-- 🌟 CAMADA 2 (FRENTE): TEXTOS E CARDS COM TOTAL NITIDEZ E LEITURA -->
+    <div style="position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px;">
+      
+      <!-- Medalhão Circular Oficial Omnievo no Topo -->
+      <div style="position: relative; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 2px;">
+        <div style="position: absolute; inset: -4px; border-radius: 50%; background: linear-gradient(90deg, #22D3EE 0%, #6366F1 50%, #9333EA 100%); opacity: 0.85; filter: blur(8px);"></div>
+        <img src="{badge_b64}" 
+             alt="Medalhão Omnievo" 
+             style="position: relative; width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255, 255, 255, 0.4); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);" />
+      </div>
 
-<!-- 2. Hero Headline com Alto Contraste Solicitado pelo Usuário -->
-<div style="position:relative;z-index:5;text-align:left;width:100%;margin:16px 0;">
-<div class="ecossistema-badge">
-<span>⚡</span>
-<span>ECOSSISTEMA INTEGRADO</span>
-</div>
+      <!-- Barra de Status do Sistema HUD -->
+      <div style="width: 100%; display: flex; align-items: center; justify-content: space-between; font-size: 11px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; color: #94A3B8; border-bottom: 1px solid rgba(30, 41, 59, 0.8); padding-bottom: 8px; padding-left: 6px; padding-right: 6px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="position: relative; display: inline-flex; width: 10px; height: 10px; align-items: center; justify-content: center;">
+            <span style="position: absolute; width: 10px; height: 10px; border-radius: 50%; background: #34D399; animation: pingDot 1.4s cubic-bezier(0, 0, 0.2, 1) infinite; opacity: 0.85;"></span>
+            <span style="position: relative; width: 7px; height: 7px; border-radius: 50%; background: #10B981; box-shadow: 0 0 6px #34D399;"></span>
+          </span>
+          <span style="color: #34D399; font-weight: 700; letter-spacing: 0.05em;">OMNIEVO_ENGINE // ACTIVE_NODE</span>
+        </div>
+        <div style="color: #22D3EE; font-weight: 700; letter-spacing: 0.05em;">
+          LATENCY: <span style="color: #34D399;">0ms</span> (ERP_DIRECT)
+        </div>
+      </div>
 
-<h1 class="showcase-main-title">
-Transforme sua Força de Vendas em uma <span class="text-gradient-neon">Máquina de Faturamento Integrada</span> ao seu ERP.
-</h1>
+      <!-- Tag de Ecossistema Integrado -->
+      <div style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 12px; border-radius: 9999px; background: rgba(59, 7, 100, 0.7); border: 1px solid rgba(168, 85, 247, 0.5); font-size: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-weight: 700; color: #D8B4FE; text-transform: uppercase; letter-spacing: 0.1em; box-shadow: 0 1px 3px rgba(0,0,0,0.2);">
+        <span>⚡</span> ECOSSISTEMA INTEGRADO
+      </div>
 
-<p class="showcase-subtitle">
-Emissão instantânea de pedidos, saldo de estoque em tempo real e inteligência comercial para a sua equipe escalar resultados.
-</p>
+      <!-- Headline Principal -->
+      <h2 style="font-size: 22px; font-weight: 900; letter-spacing: -0.02em; line-height: 1.25; max-width: 500px; color: #FFFFFF; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); margin: 0 auto;">
+        Transforme sua Força de Vendas em uma <span style="background: linear-gradient(90deg, #22D3EE 0%, #5EEAD4 50%, #34D399 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Máquina de Faturamento Integrada</span> ao seu ERP.
+      </h2>
+      
+      <p style="font-size: 12px; color: #E2E8F0; max-width: 480px; line-height: 1.5; font-weight: 400; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4); margin: 0 auto 4px auto;">
+        Emissão instantânea de pedidos, saldo de estoque em tempo real e inteligência comercial para a sua equipe escalar resultados.
+      </p>
 
-<!-- Card 1: Sincronização Nativa com ERP -->
-<div class="showcase-kpi-card">
-<div class="kpi-card-header">
-<div class="kpi-icon-box kpi-icon-purple">
-<span style="font-size:20px;">🔄</span>
-</div>
-<div class="kpi-info">
-<div class="kpi-title">Sincronização Nativa com ERP</div>
-<div class="kpi-desc">Transmissão bidirecional de pedidos e estoque</div>
-</div>
-<div class="kpi-badge-pill kpi-badge-online">100% ONLINE</div>
-</div>
-<div class="kpi-progress-bar-track">
-<div class="kpi-progress-bar-fill"></div>
-</div>
-</div>
+      <!-- Card 1: Sincronização Nativa com ERP -->
+      <div style="width: 100%; text-align: left; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(51, 65, 85, 0.7); border-radius: 12px; padding: 12px 16px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(79, 70, 229, 0.4); border: 1px solid rgba(129, 140, 248, 0.5); display: flex; align-items: center; justify-content: center; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+              🔄
+            </div>
+            <div>
+              <div style="font-size: 12px; font-weight: 700; color: #FFFFFF;">Sincronização Nativa com ERP</div>
+              <div style="font-size: 10px; color: #CBD5E1;">Transmissão bidirecional de pedidos e estoque</div>
+            </div>
+          </div>
+          <span style="padding: 2px 8px; border-radius: 9999px; background: rgba(2, 44, 34, 0.9); border: 1px solid rgba(16, 185, 129, 0.5); font-size: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-weight: 700; color: #34D399;">
+            100% ONLINE
+          </span>
+        </div>
+        <div style="width: 100%; height: 6px; background: #1E293B; border-radius: 9999px; overflow: hidden; margin-top: 8px;">
+          <div style="height: 100%; background: linear-gradient(90deg, #22D3EE 0%, #6366F1 50%, #34D399 100%); border-radius: 9999px; animation: progressAnim 3.5s ease-in-out infinite alternate;"></div>
+        </div>
+      </div>
 
-<!-- Card 2: Ranking de Vendedores ao Vivo -->
-<div class="showcase-kpi-card" style="margin-top:14px;">
-<div class="kpi-card-header">
-<div class="kpi-icon-box kpi-icon-amber">
-<span style="font-size:20px;">🏆</span>
-</div>
-<div class="kpi-info">
-<div class="kpi-title">Ranking de Vendedores ao Vivo</div>
-<div class="kpi-desc">Métricas atualizadas instantaneamente</div>
-</div>
-<div class="kpi-badge-pill kpi-badge-month">MÊS ATUAL</div>
-</div>
+      <!-- Card 2: Ranking de Vendedores ao Vivo -->
+      <div style="width: 100%; text-align: left; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(51, 65, 85, 0.7); border-radius: 12px; padding: 12px 16px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(217, 119, 6, 0.4); border: 1px solid rgba(251, 191, 36, 0.5); display: flex; align-items: center; justify-content: center; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+              🏆
+            </div>
+            <div>
+              <div style="font-size: 12px; font-weight: 700; color: #FFFFFF;">Ranking de Vendedores ao Vivo</div>
+              <div style="font-size: 10px; color: #CBD5E1;">Métricas atualizadas instantaneamente</div>
+            </div>
+          </div>
+          <span style="padding: 2px 8px; border-radius: 9999px; background: rgba(59, 7, 100, 0.9); border: 1px solid rgba(168, 85, 247, 0.5); font-size: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-weight: 700; color: #D8B4FE;">
+            MÊS ATUAL
+          </span>
+        </div>
 
-<div class="ranking-leader-row">
-<div class="ranking-name">
-<span style="font-size:16px;">🥇</span>
-<span style="font-weight:800;color:#FDE68A;">Gabriel Santos</span>
-</div>
-<div class="ranking-val">R$ 485.920,00</div>
-</div>
+        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 4px 10px; border-radius: 8px; background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(51, 65, 85, 0.5);">
+            <span style="font-weight: 600; color: #F8FAFC; display: flex; align-items: center; gap: 8px;">🥇 Gabriel Santos</span>
+            <span style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-weight: 700; color: #34D399;">R$ 485.920,00</span>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 4px 10px; border-radius: 8px; background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(51, 65, 85, 0.4);">
+            <span style="font-weight: 600; color: #E2E8F0; display: flex; align-items: center; gap: 8px;">🥈 Lucas Mendes</span>
+            <span style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-weight: 700; color: #67E8F9;">R$ 312.450,00</span>
+          </div>
+        </div>
+      </div>
 
-<div class="ranking-leader-row">
-<div class="ranking-name">
-<span style="font-size:16px;">🥈</span>
-<span style="font-weight:700;color:#FFFFFF;">Lucas Mendes</span>
-</div>
-<div class="ranking-val">R$ 312.450,00</div>
-</div>
-</div>
-</div>
+      <!-- Rodapé Técnico da Infraestrutura -->
+      <div style="width: 100%; display: flex; align-items: center; justify-content: space-between; font-size: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; color: #94A3B8; padding-top: 2px;">
+        <span>SYSTEM_VERSION: v4.8.2-PROD</span>
+        <span style="color: #818CF8; font-weight: 700; letter-spacing: 0.05em;">OMNIEVO COMMERCE DEPLOYMENT</span>
+      </div>
 
-<!-- 3. Bottom HUD Bar -->
-<div class="login-hud-footer">
-<span class="hud-footer-version">SYSTEM_VERSION: v4.8.2-PROD</span>
-<span class="hud-footer-tag">OMNIEVO COMMERCE DEPLOYMENT</span>
-</div>
+    </div>
+
+  </div>
 </div>
 '''
         st.markdown(right_panel_html, unsafe_allow_html=True)
