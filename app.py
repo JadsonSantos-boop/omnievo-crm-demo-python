@@ -3633,7 +3633,8 @@ div[data-testid="stHorizontalBlock"] > div:nth-child(2) > div[data-testid="stVer
   </div>
 </div>
 '''
-        st.markdown(right_panel_html, unsafe_allow_html=True)
+        right_panel_clean = "\n".join([_l.strip() for _l in right_panel_html.split("\n") if _l.strip()])
+        st.markdown(right_panel_clean, unsafe_allow_html=True)
     st.stop()
 
 DRAFT_CACHE = "cache/draft_pedido.json"
